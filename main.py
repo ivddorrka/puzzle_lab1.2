@@ -1,5 +1,12 @@
 def validate_board(board):
-    pass
+    check_1 = number_row_check(board)
+    check_2 = column_check(board)
+    check_3 = squ_check(board)
+    if check_1 is true and check_2 is True and check_3 is True:
+        return True
+    else:
+        return False
+    # pass
 
 def number_row_check(lst):
 
@@ -55,4 +62,7 @@ def squ_check(board):
             else:
                 return True
         
-print(squ_check(['**** ****', '***1 ****', '**  3****', '* 4 1****', '     9 5 ', ' 6  83  *', '3   1  **', '  8  2***', '  2  ****']))
+# print(squ_check(['**** ****', '***1 ****', '**  3****', '* 4 1****', '     9 5 ', ' 6  83  *', '3   1  **', '  8  2***', '  2  ****']))
+
+# def block_reb(board):
+#     columns = rebuilding(board)
