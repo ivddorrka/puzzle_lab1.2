@@ -1,6 +1,14 @@
-
+"""
+Puzzle.py checks whether the given field is ready to play with
+github repository:
+https://github.com/ivddorrka/puzzle_lab1.2.git
+"""
 def number_row_check(lst):
-
+    """
+    Function to check all rows for correct numbers
+    >>> number_row_check(['***', ' * 1', '123', '111'])
+    False
+    """
     list_board = []
     for i in lst:
         list_board.append(list(i))
@@ -10,14 +18,13 @@ def number_row_check(lst):
             if _ != '*' and _ != ' ' and j.count(_) > 1:
                 return False
     return True
-
-# print(number_row_check(['**** ****', '***  ****', '**   ****', '*    ****', '         ', '        *', '       **', '      ***', '     ****']))
+# print(number_row_check(['***', ' * 1', '123', '111']))
 
 def rebuilding(lst):
     """
     This function rebuilds columns into new row
-    >>> rebuilding(['**12*', '12345', '23456', '**23*'])
-    [['*', '1', '2', '*'], ['*', '2', '3', '*'], ['1', '3', '4', '2'], ['2', '4', '5', '3'], ['*', '5', '6', '*']]
+    >>> rebuilding(['111', '234', '123'])
+    [['1', '2', '1'], ['1', '3', '2'], ['1', '4', '3']]
     """
     prom_res = []
     for i in lst:
@@ -32,28 +39,27 @@ def rebuilding(lst):
         result.append(prom_here)
 
     return result
-# print(rebuilding(['**** ****', '***1 ****', '**  3****', '* 4 1****', '     9 5 ', ' 6  83  *', '3   1  **', '  8  2***', '  2  ****']))
+# print(rebuilding(['111', '234', '123']))
 
 def column_check(lst):
+    """
+    Function check's whether columns have right numbers, according to the given rows
+    >>> column_check(['***', ' * 1', '123', '111'])
+    False
+    """
     var1 = rebuilding(lst)
     var2 = number_row_check(var1)
     if var2 is True:
         return True
     return False
-# print(column_check(['**** ****', '***1 ****', '**  3****', '* 4 1****', '     9 5 ', ' 6  83  *', '3   2  **', '  8  2***', '  2  ****']))
-
-def squ_check(board):
-    setted = [' ', '*', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-    for i in board:
-        for j in list(i):
-            if j not in setted:
-                return False
-
-    return True
-        
-# print(squ_check(['**** ****', '***1 ****', '**  3****', '* 4 1****', '     9 5 ', ' 6  83  *', '3   1  **', '  8  2***', '  2  ****']))
+# print(column_check(['***', ' * 1', '123', '111']))
 
 def block_reb(board):
+    """
+    Function to make list of tuples with needed blocks
+    >>> block_reb(['***', ' * 1', '123', '111'])
+    [(['1', '1', '1'], ['1', '1', ' ', '*']), (['2', '3'], ['2', '*', '*']), ([' '], [' ', '*'])]
+    """
     columns = rebuilding(board)
     norma = rebuilding(columns) # to make it a list of lists
     res = []
@@ -73,9 +79,12 @@ def block_reb(board):
         result.append(res[_][_])
     
     return result
-# print(block_reb(['**** ****', '***1 ****', '**  3****', '* 4 1****', '    49 5 ', ' 6  83  *', '3   1  **', '  8  2***', '  2  ****']))
 
 def block_check(lst):
+    """
+    >>> block_check(['***', ' * 1', '123', '111'])
+    False
+    """
     all_blocks = block_reb(lst)
     result = []
     for i in range(len(all_blocks)):
@@ -84,27 +93,25 @@ def block_check(lst):
         var3 = var1 + var2
         result.append(var3)
 
-    # here_res = []
-    # for j in result:
-    #     if number_row_check(j) is True:
-    #         here_res.append(j)
-    
     if number_row_check(result) is True:
         return True
     return False
-    # return result[0]
-# print(block_check(['**** ****', '***1 ****', '**  3****', '* 4 1****', '    49 5 ', ' 6  83  *', '3   1  **', '  8  2***', '  2  ****']))
+# print(block_check(['***', ' * 1', '123', '111']))
 
 def validate_board(board):
+    """
+    Main function which checks whether field is correct
+    >>> validate_board(['***', ' * 1', '123', '111'])
+    False
+    """
     check_1 = number_row_check(board)
     check_2 = column_check(board)
-    # check_3 = squ_check(board)
     check_4 = block_check(board)
     if check_1 is True and check_2 is True and check_4 is True:
         return True
     return False
-    # return 
-# print(validate_board(["**** ****", "***1 ****", "**  3****", "* 4 1****", "    49 5 ", " 6  83  *", "3   2  **", "  8  2***", "  2  ****"]))
+# print(validate_board(['***', ' * 1', '123', '111']))
 
-
-print(validate_board(["****1****", "*** 2****", "**  3****", "*   4****", "    56781", "        *", "2      **", "      ***", "3 4  ****"]))
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
